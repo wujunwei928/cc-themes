@@ -4,6 +4,9 @@
 
 [ccstatusline](https://github.com/sirmalloc/ccstatusline) 是 Claude Code 社区最流行的状态栏美化工具。cc-themes 为它提供开箱即用的主题方案，让你无需手动配置，一条命令即可切换风格。
 
+<img width="1179" height="1481" alt="image" src="https://github.com/user-attachments/assets/ea441aa6-0875-4dfa-aa1b-5d7726aee69f" />
+
+
 ## 前置依赖
 
 1. **Claude Code** — 已安装并正常运行
