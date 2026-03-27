@@ -16,7 +16,17 @@ program
 
 program.command('list').description('列出所有内置主题').action(list);
 program.command('use <name>').description('切换到指定主题').action(use);
-program.command('preview <name>').description('预览主题效果').action(preview);
+program.command('preview [name]').description('预览主题效果').option('--all', '预览所有主题').action(async (name: string | undefined, options: { all?: boolean }) => {
+  if (options.all) {
+    const { previewAll } = await import('./commands/preview.js');
+    previewAll();
+  } else if (name) {
+    preview(name);
+  } else {
+    console.error('请指定主题名称或使用 --all 查看所有主题');
+    process.exit(1);
+  }
+});
 program.command('current').description('显示当前配置摘要').action(current);
 program.command('random').description('随机切换一个主题').action(random);
 program.command('restore').description('恢复上一次的配置备份').action(restore);

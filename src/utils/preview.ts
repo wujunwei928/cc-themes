@@ -5,10 +5,12 @@ import os from 'node:os';
 import type { ccstatuslineSettings } from '../types.js';
 
 function generateMockStatusJSON(): string {
+  // 使用当前工作目录，以便 ccstatusline 能获取真实的 git 分支和 diff 信息
+  const cwd = process.cwd();
   return JSON.stringify({
     model: { id: 'claude-sonnet-4-6', display_name: 'Sonnet' },
-    cwd: '/home/user/project',
-    workspace: { current_dir: '/home/user/project', project_dir: '/home/user/project' },
+    cwd,
+    workspace: { current_dir: cwd, project_dir: cwd },
     cost: {
       total_cost_usd: 0.42,
       total_duration_ms: 185000,

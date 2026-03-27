@@ -14,7 +14,6 @@ export default defineTheme({
       w('context-percentage', { color: 'green' }),
       w('separator', { character: '│', color: 'brightBlack' }),
       w('git-branch', { color: 'magenta' }),
-      w('separator', { character: '│', color: 'brightBlack' }),
       w('git-changes', { color: 'yellow' }),
     ]],
     flexMode: 'full-minus-40',

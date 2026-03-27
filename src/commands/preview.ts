@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { getThemeByName } from '../themes/index.js';
+import { getAllThemes, getThemeByName } from '../themes/index.js';
 import { previewTheme } from '../utils/preview.js';
 
 export function preview(name: string): void {
@@ -18,4 +18,21 @@ export function preview(name: string): void {
     console.log(chalk.gray(`使用 "cc-themes use ${name}" 切换后查看实际效果`));
   }
   console.log(chalk.gray('─'.repeat(60)));
+}
+
+export function previewAll(): void {
+  const themes = getAllThemes();
+  console.log(chalk.bold.cyan(`共 ${themes.length} 个内置主题`));
+  console.log();
+
+  for (const theme of themes) {
+    console.log(chalk.bold(`[${theme.name}]`) + chalk.gray(` ${theme.description}`));
+    const result = previewTheme(theme.config);
+    if (result) {
+      console.log(result);
+    } else {
+      console.log(chalk.yellow('  (无法渲染预览)'));
+    }
+    console.log();
+  }
 }

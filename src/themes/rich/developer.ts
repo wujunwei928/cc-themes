@@ -13,6 +13,7 @@ export default defineTheme({
         w('model', { color: 'brightCyan', bold: true }),
         w('separator', { character: '│', color: 'brightBlack' }),
         w('git-branch', { color: 'magenta' }),
+        w('git-changes', { color: 'brightMagenta' }),
         w('separator', { character: '│', color: 'brightBlack' }),
         w('git-root-dir', { color: 'brightBlue' }),
         w('separator', { character: '│', color: 'brightBlack' }),

@@ -13,7 +13,6 @@ export default defineTheme({
         w('model', { color: 'cyan', bold: true }),
         w('separator', { character: '│', color: 'brightBlack' }),
         w('git-branch', { color: 'magenta' }),
-        w('separator', { character: '│', color: 'brightBlack' }),
         w('git-changes', { color: 'yellow' }),
         w('flex-separator'),
         w('tokens-total', { color: 'green' }),
