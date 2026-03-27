@@ -38,6 +38,22 @@ function generateMockStatusJSON(): string {
   });
 }
 
+/** 跨平台查找 npx 可执行文件路径 */
+function findNpx(): string {
+  const isWin = process.platform === 'win32';
+  // Windows 下 npx 的实际路径通常是 npx.cmd
+  const candidates = isWin ? ['npx.cmd', 'npx'] : ['npx'];
+  for (const cmd of candidates) {
+    try {
+      execFileSync(cmd, ['--version'], { encoding: 'utf-8', timeout: 5000, stdio: 'pipe' });
+      return cmd;
+    } catch {
+      continue;
+    }
+  }
+  return 'npx';
+}
+
 export function previewTheme(settings: ccstatuslineSettings): string | null {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'cc-themes-preview-'));
   try {
@@ -45,15 +61,19 @@ export function previewTheme(settings: ccstatuslineSettings): string | null {
     fs.writeFileSync(configPath, JSON.stringify(settings, null, 2), 'utf-8');
 
     const mockData = generateMockStatusJSON();
+    const npx = findNpx();
 
-    const result = execFileSync('npx', ['-y', 'ccstatusline@latest', '--config', configPath], {
+    const result = execFileSync(npx, ['-y', 'ccstatusline@latest', '--config', configPath], {
       input: mockData,
       encoding: 'utf-8',
       timeout: 30000,
     });
 
     return result.trim();
-  } catch {
+  } catch (e) {
+    if (process.env.CC_THEMES_DEBUG) {
+      console.error('预览失败:', e instanceof Error ? e.message : e);
+    }
     return null;
   } finally {
     fs.rmSync(tmpDir, { recursive: true, force: true });
