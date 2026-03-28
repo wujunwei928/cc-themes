@@ -1,6 +1,6 @@
 {
   "name": "cc-themes",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "ccstatusline 主题管理工具 — 快速切换内置主题，一键预览/导出/恢复",
   "type": "module",
   "bin": {

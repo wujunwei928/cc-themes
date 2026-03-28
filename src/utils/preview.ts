@@ -38,20 +38,24 @@ function generateMockStatusJSON(): string {
   });
 }
 
-/** 跨平台查找 npx 可执行文件路径 */
+/** 跨平台查找 npx 可执行文件路径（进程级缓存，只探测一次） */
+let _npxCache: string | undefined;
 function findNpx(): string {
+  if (_npxCache !== undefined) return _npxCache;
+
   const isWin = process.platform === 'win32';
-  // Windows 下 npx 的实际路径通常是 npx.cmd
   const candidates = isWin ? ['npx.cmd', 'npx'] : ['npx'];
   for (const cmd of candidates) {
     try {
       execFileSync(cmd, ['--version'], { encoding: 'utf-8', timeout: 5000, stdio: 'pipe' });
-      return cmd;
+      _npxCache = cmd;
+      return _npxCache;
     } catch {
       continue;
     }
   }
-  return 'npx';
+  _npxCache = 'npx';
+  return _npxCache;
 }
 
 export function previewTheme(settings: ccstatuslineSettings): string | null {
